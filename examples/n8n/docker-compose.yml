@@ -1,0 +1,44 @@
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: n8n
+    ports:
+      - "5678:5678"
+    volumes:
+      - .data:/home/node/.n8n
+    environment:
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - GENERIC_TIMEZONE=Asia/Ho_Chi_Minh
+      - N8N_MCP_SERVERS={"ClickUp":{"host":"clickup-mcp-server","port":8000}}
+    restart: always
+    networks:
+      - app-network
+
+  clickup-mcp-server:
+    image: panhpc/mcp-clickup:latest  
+    # or use build from local Dockerfile
+    # build:
+    #   context: ../../
+    #   dockerfile: Dockerfile
+    ports:
+      - '3231:8000'
+    environment:
+      - CLICKUP_API_KEY=${CLICKUP_API_KEY}
+      - CLICKUP_TEAM_ID=${CLICKUP_TEAM_ID}
+      - ENABLE_SSE=true
+      - DOCUMENT_SUPPORT=true
+    volumes:
+      - ./src:/app/src
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
