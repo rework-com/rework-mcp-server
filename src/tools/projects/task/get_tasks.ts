@@ -38,7 +38,14 @@ export const getTasksSchema = {
 
 export const getTasksTool = {
     name: "get_tasks",
-    description: `Get tasks from a all boards. Can filtered by q, board_id, project_id, deadline_from, deadline_to, created_from, created_to, page, creator, assign, status`,
+    description: `
+		Get tasks from a all boards. 
+		Can filtered by q (query to filter task name), board_id, project_id, 
+		deadline_from (Unix timestamp in seconds), deadline_to (Unix timestamp in seconds), 
+		created_from (Unix timestamp in seconds), created_to (Unix timestamp in seconds), 
+		page (page number), creator (user id of creator), assign (user id of assignee), 
+		status (one of: 'active' (not done), 'done', 'review' (In review process), 'todo' (not started), 'doing' (started), 'donelate' (completed after deadline), 'overdue' (not done and past deadline), 'notreview' (not in review), 'today' (due today))
+	`,
     inputSchema: getTasksSchema
 };
 
@@ -89,5 +96,19 @@ export async function getTasksHandler(params: any) {
 		data: taskData
 	})
 
-    return Responder.createResponse(data);
+	const tasks = (data?.tasks || []);
+	if (tasks.length > 30) {
+		tasks.map(e => {
+			return {
+				name: e.name,
+				id: e.id
+			}
+		})
+	}
+		
+
+    return Responder.createResponse({
+		...data,
+		tasks
+	});
 }

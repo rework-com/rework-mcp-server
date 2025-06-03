@@ -27,7 +27,10 @@ export const createTaskSchema = {
 
 export const createTaskTool = {
     name: "create_task",
-    description: `Creates a single task in a Project board. Use boardId. Required: name + boardId. Supports custom fields as array of {id, value}.`,
+    description: `
+		Creates a single task in a Project board. Use board_id.
+		Required: name + board_id. Supports custom fields as array of {id, value}.
+	`,
     inputSchema: createTaskSchema
 };
 
