@@ -4,9 +4,7 @@
   "description": "ClickUp MCP Server - Integrate ClickUp tasks with AI through Model Context Protocol",
   "type": "module",
   "main": "build/index.js",
-  "bin": {
-    "clickup-mcp-server": "build/index.js"
-  },
+  "bin": "build/index.js",
   "files": [
     "build",
     "README.md",
@@ -58,7 +56,8 @@
     "@modelcontextprotocol/sdk": "^1.11.3",
     "axios": "^1.6.7",
     "dotenv": "^16.4.1",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "zod": "^3.25.48"
   },
   "devDependencies": {
     "@types/express": "^5.0.1",

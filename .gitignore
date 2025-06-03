@@ -39,3 +39,4 @@ checklist.md
 # Temporary files
 .tmp/
 .temp/
+.yarn

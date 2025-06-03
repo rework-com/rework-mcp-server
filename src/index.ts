@@ -24,7 +24,7 @@
  */
 
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { configureServer, server } from './server.js';
+import { startStdioServer } from './server.js'
 import { info, error } from './logger.js';
 import config from './config.js';
 import { dirname } from 'path';
@@ -46,28 +46,6 @@ process.on('unhandledRejection', (reason, promise) => {
   process.exit(1);
 });
 
-async function startStdioServer() {
-  info('Starting Rework MCP Server...');
-
-  // Log essential information about the environment
-  info('Server environment', {
-    pid: process.pid,
-    node: process.version,
-    os: process.platform,
-    arch: process.arch,
-  });
-
-  // Configure the server with all handlers
-  info('Configuring server request handlers');
-  await configureServer();
-
-  // Connect using stdio transport
-  info('Connecting to MCP stdio transport');
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-
-  info('Server startup complete - ready to handle requests');
-}
 
 /**
  * Application entry point that configures and starts the MCP server.

@@ -19,8 +19,8 @@ const envArgs: { [key: string]: string } = {};
 for (let i = 0; i < args.length; i++) {
   if (args[i] === '--env' && i + 1 < args.length) {
     const [key, value] = args[i + 1].split('=');
-    if (key === 'REWORK_API_KEY') envArgs.reworkApiKey = value;
-    if (key === 'REWORK_PASSWORD') envArgs.reworkPassword = value;
+    if (key === 'REWORK_PROJECT_ACCESS_TOKEN') envArgs.reworkProjectAccessToken = value;
+    if (key === 'REWORK_PROJECT_PASSWORD') envArgs.reworkProjectPassword = value;
     if (key === 'DOCUMENT_SUPPORT') envArgs.documentSupport = value;
     if (key === 'DOCUMENT_MODEL') envArgs.documentSupport = value; // Backward compatibility
     if (key === 'DOCUMENT_MODULE') envArgs.documentSupport = value; // Backward compatibility
@@ -65,8 +65,8 @@ export const parseLogLevel = (levelStr: string | undefined): LogLevel => {
 
 // Define required configuration interface
 interface Config {
-  reworkApiKey: string;
-  reworkPassword: string;
+  reworkProjectAccessToken: string;
+  reworkProjectPassword: string;
   enableSponsorMessage: boolean;
   documentSupport: string;
   logLevel: LogLevel;
@@ -75,10 +75,12 @@ interface Config {
   port?: string;
 }
 
+console.log(process.env)
+
 // Load configuration from command line args or environment variables
 const configuration: Config = {
-  reworkApiKey: envArgs.reworkApiKey || process.env.REWORK_API_KEY || '',
-  reworkPassword: envArgs.reworkPassword || process.env.REWORK_PASSWORD || '',
+  reworkProjectAccessToken: envArgs.reworkProjectAccessToken || process.env.REWORK_PROJECT_ACCESS_TOKEN || '',
+  reworkProjectPassword: envArgs.reworkProjectPassword || process.env.REWORK_PROJECT_PASSWORD || '',
   enableSponsorMessage: process.env.ENABLE_SPONSOR_MESSAGE !== 'false',
   documentSupport:
     envArgs.documentSupport ||
@@ -99,7 +101,7 @@ const configuration: Config = {
 // Don't log to console as it interferes with JSON-RPC communication
 
 // Validate only the required variables are present
-const requiredVars = ['reworkApiKey', 'reworkPassword'];
+const requiredVars = ['reworkProjectAccessToken', 'reworkProjectPassword'];
 const missingEnvVars = requiredVars
   .filter(key => !configuration[key as keyof Config])
   .map(key => key);
