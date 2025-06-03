@@ -19,6 +19,8 @@ import { Logger } from "./logger.js";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { createTaskHandler, createTaskTool } from "./tools/projects/task/create_task.js";
+import { getTasksHandler, getTasksTool } from "./tools/projects/task/get_tasks.js";
+import { listAllUsersHandler, listAllUsersTool } from "./tools/system/user/list_all.js";
 
 // Create a logger instance for server
 const logger = new Logger('Server');
@@ -30,6 +32,9 @@ const server = new McpServer({
 });
 
 
+/**
+ * @desc Task tools
+ */
 server.tool(
   createTaskTool.name,
   createTaskTool.description,
@@ -37,6 +42,28 @@ server.tool(
   async (params) => {
     return (await createTaskHandler(params)) as Tool;
   }
+)
+
+server.tool(
+	getTasksTool.name,
+	getTasksTool.description,
+	getTasksTool.inputSchema,
+	async (params) => {
+	  return (await getTasksHandler(params)) as Tool;
+	}
+)
+
+
+/**
+ * @desc User tools
+ */
+server.tool(
+	listAllUsersTool.name,
+	listAllUsersTool.description,
+	listAllUsersTool.inputSchema,
+	async (params) => {
+	  return (await listAllUsersHandler(params)) as Tool;
+	}
 )
 
 

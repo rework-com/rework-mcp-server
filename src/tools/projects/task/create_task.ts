@@ -1,4 +1,4 @@
-import { reworkFetcher } from '../../../utils/api/fetcher.js';
+import { reworkProjectFetcher } from '../../../utils/api/fetcher.js';
 import Responder from '../../../utils/responder.js';
 
 /**
@@ -72,7 +72,7 @@ export async function createTaskHandler(params: any) {
     if (creator_username) taskData.creator_username = creator_username;
 
     // Use the fetcher to create the task
-    const data = await reworkFetcher.createTask(taskData);
+    const data = await reworkProjectFetcher.createTask(taskData);
 
     return Responder.createResponse(data);
 }

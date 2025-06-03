@@ -18,9 +18,9 @@ export interface ReworkRequestOptions {
 }
 
 export class ReworkFetcher {
-  private baseUrl: string = 'https://apis.rework.com';
-  private accessToken: string;
-  private password: string;
+  protected baseUrl: string = 'https://apis.rework.com';
+  protected accessToken: string;
+  protected password: string;
 
   constructor() {
     this.accessToken = config.reworkProjectAccessToken;
@@ -154,8 +154,26 @@ export class ReworkFetcher {
   }
 }
 
-// Export a singleton instance for easy import and use
-export const reworkFetcher = new ReworkFetcher();
+/**
+ * ReworkAccountFetcher utility
+ * 
+ * Similar to ReworkFetcher but uses account credentials instead of project credentials
+ */
+export class ReworkAccountFetcher extends ReworkFetcher {
+  constructor() {
+    super();
+    this.accessToken = config.reworkAccountAccessToken;
+    this.password = config.reworkAccountPassword;
+    
+    if (!this.accessToken || !this.password) {
+      throw new Error('Rework Account API credentials not found in configuration');
+    }
+  }
+}
+
+// Export singleton instances for easy import and use
+export const reworkProjectFetcher = new ReworkFetcher();
+export const reworkAccountFetcher = new ReworkAccountFetcher();
 
 // Export default for convenience
-export default reworkFetcher;
+export default reworkProjectFetcher;
