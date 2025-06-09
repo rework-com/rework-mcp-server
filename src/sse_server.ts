@@ -5,8 +5,8 @@ import express from 'express';
 import configuration from './config.js';
 
 const server = new McpServer({
-  name: 'clickup-mcp-server',
-  version: '0.7.2',
+  name: 'rework-mcp-server',
+  version: '1.1.0',
 });
 
 const app = express();

@@ -37,7 +37,7 @@ const logger = new Logger('Server');
 
 const server = new McpServer({
   name: 'rework-mcp-server',
-  version: '0.7.2',
+  version: '1.1.0',
 });
 
 

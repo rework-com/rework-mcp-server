@@ -1,4 +1,4 @@
-# v0.7.2 Release Notes (2025-04-25)
+# v1.1.0 Release Notes (2025-04-25)
 
 ## 🛠️ Bug Fixes
 
