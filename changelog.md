@@ -20,8 +20,6 @@
 
 ### 🔗 References
 
-- #45: [Bug: Time estimates not allowed when updating tasks](https://github.com/taazkareem/clickup-mcp-server/issues/45)
-
 ## v0.7.1 (2025-04-24)
 
 ### 🚀 New Features & Improvements
@@ -71,13 +69,6 @@
 - Improved API reference accuracy for task update operations
 
 ### 🔗 References
-
-- #37: [Fix authorization issue with custom task IDs](https://github.com/taazkareem/clickup-mcp-server/issues/37)
-- #36: [Fix types for windsurf compatibility](https://github.com/taazkareem/clickup-mcp-server/pull/36)
-- #38: [Add time tracking functionality](https://github.com/taazkareem/clickup-mcp-server/pull/38)
-- #39: [Add command disabling capability](https://github.com/taazkareem/clickup-mcp-server/pull/39)
-- #40: [Fix custom field updates](https://github.com/taazkareem/clickup-mcp-server/pull/40)
-- #41: [Add document module](https://github.com/taazkareem/clickup-mcp-server/pull/41)
 
 ## v0.6.9 (2025-04-03)
 
@@ -191,9 +182,6 @@
 
 ### 🔗 References
 
-- #18: [See pull request](https://github.com/taazkareem/clickup-mcp-server/pull/18)
-- #20: [See pull request](https://github.com/taazkareem/clickup-mcp-server/pull/20)
-
 ## v0.5.1 (2025-03-23)
 
 ### 🚀 New Features & Improvements
@@ -242,4 +230,3 @@
 
 ### 🔗 References
 
-- #12: [See pull request](https://github.com/taazkareem/clickup-mcp-server/pull/12)
