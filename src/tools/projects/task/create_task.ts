@@ -19,7 +19,7 @@ export const createTaskSchema = {
     tags: z.array(z.string()).optional().describe("Optional array of tag names to assign to the task. The tags must already exist in the space."),
     custom_fields: z.array(
         z.object({
-            id: z.string().describe("ID of the custom field"),
+            code: z.string().describe("Code of the custom field"),
             value: z.any().describe("Value for the custom field. Type depends on the field type.")
         })
     ).optional().describe("Optional array of custom field values to set on the task. Each object must have an 'id' and 'value' property.")
@@ -29,7 +29,7 @@ export const createTaskTool = {
     name: "create_task",
     description: `
 		Creates a single task in a Project board. Use board_id.
-		Required: name + board_id. Supports custom fields as array of {id, value}.
+		Required: name + board_id. Supports custom fields as array of {code, value}.
 	`,
     inputSchema: createTaskSchema
 };
@@ -69,8 +69,12 @@ export async function createTaskHandler(params: any) {
     if (deadline) taskData.deadline = deadline;
     if (start_date) taskData.start_date = start_date;
     if (parent_id) taskData.parent_id = parent_id;
-    if (tags && Array.isArray(tags)) taskData.tags = tags;
-    if (custom_fields && Array.isArray(custom_fields)) taskData.custom_fields = custom_fields;
+	if (tags && Array.isArray(tags)) taskData.tags = tags.join(',');
+    if (custom_fields && Array.isArray(custom_fields)) {
+		for (const custom_field of custom_fields) {
+			taskData[custom_field.code] = custom_field.value;
+		}
+	}
     if (user_id) taskData.user_id = user_id;
     if (creator_username) taskData.creator_username = creator_username;
 

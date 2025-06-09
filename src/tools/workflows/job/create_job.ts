@@ -13,8 +13,8 @@ export const createJobSchema = {
     content: z.string().optional().describe("Optional html formatted description for the job"),
     deadline: z.string().optional().describe("Optional deadline. Supports Unix timestamps (seconds)"),
     creator_username: z.string().describe("REQUIRED: Username of the creator. This will be used to indicate the job creator."),
-    user_id: z.string().optional().describe("Optional user ID of the assignee. This will be used to assign the job to the user."),
-    tags: z.array(z.string()).optional().describe("Optional array of tag names to assign to the job. The tags must already exist in the space."),
+    username: z.string().optional().describe("Optional username of the assignee. This will be used to assign the job to the user."),
+    tags: z.array(z.string()).optional().describe("Optional array of tag ids to assign to the job. The tags must already exist in the workflow."),
     custom_fields: z.array(
         z.object({
             code: z.string().describe("Code of the custom field"),
@@ -30,7 +30,7 @@ export const createJobTool = {
     name: "create_job",
     description: `
 		Creates a single job in a Workflow. Use workflow_id.
-		Required: name + workflow_id. Supports custom fields as array of {id, value}.
+		Required: name + workflow_id. Supports custom fields as array of {code, value}.
 	`,
     inputSchema: createJobSchema
 };
@@ -51,7 +51,7 @@ export async function createJobHandler(params: any) {
         tags,
         custom_fields,
         creator_username,
-        user_id
+        username
     } = params;
 
     if (!name) throw new Error("Job name is required");
@@ -66,9 +66,13 @@ export async function createJobHandler(params: any) {
     // Add optional fields if they exist
     if (content) jobData.content = content;
     if (deadline) jobData.deadline = deadline;
-    if (tags && Array.isArray(tags)) jobData.tags = tags;
-    if (custom_fields && Array.isArray(custom_fields)) jobData.custom_fields = custom_fields;
-    if (user_id) jobData.user_id = user_id;
+    if (tags && Array.isArray(tags)) jobData.tags = tags.join(',');
+    if (custom_fields && Array.isArray(custom_fields)) {
+		for (const custom_field of custom_fields) {
+			jobData[custom_field.code] = custom_field.value;
+		}
+	}
+    if (username) jobData.username = username;
     if (creator_username) jobData.creator_username = creator_username;
 
     // Use the fetcher to create the job

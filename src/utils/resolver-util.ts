@@ -19,7 +19,7 @@ export interface NameMatchResult {
  */
 export function isNameMatch(actualName: string, searchName: string): NameMatchResult {
 	if (!actualName || !searchName) {
-	  return { isMatch: false, score: 0, exactMatch: false, reason: 'One of the names is empty' };
+	  return { isMatch: true, score: 100, exactMatch: false, reason: 'The name is empty' };
 	}
   
 	// Remove any extra whitespace

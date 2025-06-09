@@ -17,7 +17,16 @@ export const getWorkflowsSchema = {
 
 export const getWorkflowsTool = {
     name: "get_workflows",
-    description: `Get workflows. Can filtered by q. Each workflow contain a list of stages`,
+    description: `Get workflows. Can filtered by q. 
+		Each workflow contain a list of stages and list of fields that used to create job
+		In each field, it contains: 
+			- name: name of the field
+			- code: code of the field
+			- type: type of the field
+			- required: true if the field is required
+			- options: options of the field
+			- placeholder: description of the field
+	`,
     inputSchema: getWorkflowsSchema
 };
 

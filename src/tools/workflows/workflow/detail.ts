@@ -16,7 +16,16 @@ export const getWorkflowSchema = {
 
 export const getWorkflowTool = {
     name: "get_workflow",
-    description: `Get detail of a workflow`,
+    description: `
+		Get detail of a workflow. In workflow detail contain a list of stages and list of fields that used to create job
+		In each field, it contains: 
+			- name: name of the field
+			- code: code of the field
+			- type: type of the field
+			- required: true if the field is required
+			- options: options of the field
+			- placeholder: description of the field
+	`,
     inputSchema: getWorkflowSchema
 };
 
@@ -51,7 +60,14 @@ export async function getWorkflowHandler(params: any) {
 		name: data?.workflow?.name,
 		id: data?.workflow?.id,
 		content: data?.workflow?.content,
-		fields: (data?.workflow?.input_model?.fields || []),
+		fields: (data?.workflow?.input_model?.fields || []).map((f: any) => ({
+			name: f.name,
+			code: f.code,
+			type: f.type,
+			required: f.attrs?.required,
+			options: f.data?.options,
+			placeholder: f.data?.placeholder
+		})),
 		stages: (data?.workflow?.execution_model?.stages || []).map((s: any) => ({
 			name: s.name,
 			id: s.id,
