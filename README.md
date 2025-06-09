@@ -1,82 +1,68 @@
-<img src="assets/images/clickup_mcp_server_social_image.png" alt="ClickUp MCP Server" width="100%">
+# Rework MCP Server
 
-![Total Supporters](https://img.shields.io/badge/🏆%20Total%20Supporters-4-gold)
-[![GitHub Stars](https://img.shields.io/github/stars/TaazKareem/clickup-mcp-server?style=flat&logo=github)](https://github.com/TaazKareem/clickup-mcp-server/stargazers)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-brightgreen.svg)](https://github.com/TaazKareem/clickup-mcp-server/graphs/commit-activity)
+![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-brightgreen.svg)
+![Version](https://img.shields.io/badge/Version-0.7.2-blue)
 
-A Model Context Protocol (MCP) server for integrating ClickUp tasks with AI applications. This server allows AI agents to interact with ClickUp tasks, spaces, lists, and folders through a standardized protocol.
+A Model Context Protocol (MCP) server for integrating Rework platform with AI applications. This server allows AI agents to interact with Rework projects, tasks, workflows, and jobs through a standardized protocol.
 
-> 🚀 **Status Update:** v0.7.2 now available with complete Time Tracking support and Document Management features.  Please note, some of the latest features/tools are not rolled out yet and will only work when cloning the repo and running locally as node command instead of npx.
+> 🚀 **Status Update:** v0.7.2 now available with complete project management and workflow support.
 
 ## Setup
 
-1. Get your credentials:
-   - ClickUp API key from [ClickUp Settings](https://app.clickup.com/settings/apps)
-   - Team ID from your ClickUp workspace URL
-2. Choose either hosted installation (sends webhooks) or NPX installation (downloads to local path and installs dependencies)
-3. Use natural language to manage your workspace!
+1. Get your Rework credentials:
+   - API key from Rework platform settings
+   - Workspace information from your Rework account
+2. Configure the MCP server with your credentials
+3. Use natural language to manage your projects and workflows!
 
-## Smithery Installation (Quick Start)
-
-[![smithery badge](https://smithery.ai/badge/@taazkareem/clickup-mcp-server)](https://smithery.ai/server/@TaazKareem/clickup-mcp-server)
-
-The server is hosted on [Smithery](https://smithery.ai/server/@taazkareem/clickup-mcp-server). There, you can preview the available tools or copy the commands to run on your specific client app.
-
-## NPX Installation
-
-[![NPM Version](https://img.shields.io/npm/v/@taazkareem/clickup-mcp-server.svg?style=flat&logo=npm)](https://www.npmjs.com/package/@taazkareem/clickup-mcp-server)
-[![Dependency Status](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen)](https://github.com/TaazKareem/clickup-mcp-server/blob/main/package.json)
-[![NPM Downloads](https://img.shields.io/npm/dm/@taazkareem/clickup-mcp-server.svg?style=flat&logo=npm)](https://npmcharts.com/compare/@taazkareem/clickup-mcp-server?minimal=true)
+## Installation
 
 Add this entry to your client's MCP settings JSON file:
 
 ```json
 {
   "mcpServers": {
-    "ClickUp": {
-      "command": "npx",
+    "Rework": {
+      "command": "node",
       "args": [
-        "-y",
-        "@taazkareem/clickup-mcp-server@latest"
+        "index.js"
       ],
       "env": {
-        "CLICKUP_API_KEY": "your-api-key",
-        "CLICKUP_TEAM_ID": "your-team-id",
-        "DOCUMENT_SUPPORT": "true"
+        "REWORK_API_KEY": "your-api-key",
+        "REWORK_WORKSPACE_ID": "your-workspace-id"
       }
     }
   }
 }
 ```
 
-Or use this npx command:
+Alternatively, you can run the server directly using Node:
 
-`npx -y @taazkareem/clickup-mcp-server@latest --env CLICKUP_API_KEY=your-api-key --env CLICKUP_TEAM_ID=your-team-id`
+```bash
+node index.js --env REWORK_API_KEY=your-api-key --env REWORK_WORKSPACE_ID=your-workspace-id
+```
 
-**Obs: if you don't pass "DOCUMENT_SUPPORT": "true", the default is false and document support will not be active.**
+You can use the `DISABLED_TOOLS` environment variable to disable specific tools. Provide a comma-separated list of tool names to disable (e.g., `create_task,get_tasks`).
 
-Additionally, you can use the `DISABLED_TOOLS` environment variable or `--env DISABLED_TOOLS` argument to disable specific tools. Provide a comma-separated list of tool names to disable (e.g., `create_task,delete_task`).
-
-Please disable tools you don't need if you are having issues with the number of tools or any context limitations
+Disable tools you don't need if you are experiencing issues with the number of tools or any context limitations.
 
 ## Running with SSE Support
 
-Server can be run in SSE (Server-Sent Events) mode by setting the following environment variables:
+The server can be run in SSE (Server-Sent Events) mode by setting the following environment variables:
 
 ```json
 {
   "mcpServers": {
-    "ClickUp": {
-      "command": "npx",
+    "Rework": {
+      "command": "node",
       "args": [
-        "-y",
-        "@taazkareem/clickup-mcp-server@latest"
+        "index.js"
       ],
       "env": {
-        "CLICKUP_API_KEY": "your-api-key",
-        "CLICKUP_TEAM_ID": "your-team-id",
+        "REWORK_API_KEY": "your-api-key",
+        "REWORK_WORKSPACE_ID": "your-workspace-id",
         "ENABLE_SSE": "true",
-        "PORT": "8000"  // Optional, defaults to 3231
+        "PORT": "8000"  // Optional, defaults to 3000
       }
     }
   }
@@ -85,25 +71,27 @@ Server can be run in SSE (Server-Sent Events) mode by setting the following envi
 
 Or via command line:
 
-`npx -y @taazkareem/clickup-mcp-server@latest --env CLICKUP_API_KEY=your-api-key --env CLICKUP_TEAM_ID=your-team-id --env ENABLE_SSE=true --env PORT=8000`
+```bash
+node index.js --env REWORK_API_KEY=your-api-key --env REWORK_WORKSPACE_ID=your-workspace-id --env ENABLE_SSE=true --env PORT=8000
+```
 
-## Docker-compose example 
+## Docker Deployment
+
 ```yaml
 version: '3.8'
 
 services:
-  clickup-mcp-server:
+  rework-mcp-server:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '3231:8000'
+      - '3000:8000'
     environment:
-      - CLICKUP_API_KEY=${CLICKUP_API_KEY}
-      - CLICKUP_TEAM_ID=${CLICKUP_TEAM_ID}
+      - REWORK_API_KEY=${REWORK_API_KEY}
+      - REWORK_WORKSPACE_ID=${REWORK_WORKSPACE_ID}
       - ENABLE_SSE=true
       - LOG_LEVEL=info
-      - DOCUMENT_SUPPORT=true
     volumes:
       - ./src:/app/src
     restart: unless-stopped
@@ -116,126 +104,87 @@ services:
 ```
 ## Features
 
-| 📝 Task Management                                                                                                                                                                                                                                                   | 🏷️ Tag Management                                                                                                                                                                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| • Create, update, and delete tasks<br>• Move and duplicate tasks anywhere<br>• Support for single and bulk operations<br>• Set start/due dates with natural language<br>• Create and manage subtasks<br>• Add comments and attachments | • Create, update, and delete space tags<br>• Add and remove tags from tasks<br>• Use natural language color commands<br>• Automatic contrasting foreground colors<br>• View all space tags<br>• Tag-based task organization across workspace |
-| ⏱️ **Time Tracking**                                                                                                                                                                                                                                          | 🌳 **Workspace Organization**                                                                                                                                                                                                                                         |
-| • View time entries for tasks<br>• Start/stop time tracking on tasks<br>• Add manual time entries<br>• Delete time entries<br>• View currently running timer<br>• Track billable and non-billable time                                 | • Navigate spaces, folders, and lists<br>• Create and manage folders<br>• Organize lists within spaces<br>• Create lists in folders<br>• View workspace hierarchy<br>• Efficient path navigation                                             |
-| 📄 **Document Management**                                                                                                                                                                                                                                      | 👥 **Member Management**                                                                                                                                                                                                                                             |
-| • Document Listing through all workspace<br>• Document Page listing<br>• Document Page Details<br>• Document Creation<br>• Document page update (append & prepend)                                                                       | • Find workspace members by name or email<br>• Resolve assignees for tasks<br>• View member details and permissions<br>• Assign tasks to users during creation<br>• Support for user IDs, emails, or usernames<br>• Team-wide user management                            |
-| ⚡ **Integration Features**                                                                                                                                                                                                                                      |                                                                                                                                                                                                                                                                            |
-| • Global name or ID-based lookups<br>• Case-insensitive matching<br>• Markdown formatting support<br>• Built-in rate limiting<br>• Error handling and validation<br>• Comprehensive API coverage                                             |                                                                                                                                                                                                                                                                            |
+| 📝 **Project Management**                                                                                           | 🔄 **Workflow Management**                                                                |
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| • Create and manage tasks<br>• View task details<br>• List tasks in projects<br>• Add comments to tasks<br>• Organize tasks within projects<br>• View task status and progress | • Create and manage jobs<br>• Track job status<br>• View job details<br>• List jobs by workflow<br>• Organize workflows<br>• Link jobs to workflows |
+
+| 👥 **User Management**                                                                                               | ⚡ **Integration Features**                                                                |
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| • Find users by name or email<br>• List all available users<br>• Assign users to tasks<br>• View user information<br>• User authentication<br>• Manage user permissions | • ID and name-based lookups<br>• Markdown content support<br>• Built-in error handling<br>• API rate limiting<br>• Validation of inputs<br>• Comprehensive API coverage |
 
 ## Available Tools
 
-| Tool                                                               | Description                     | Required Parameters                                                                                                          |
-| ------------------------------------------------------------------ | ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| [get_workspace_hierarchy](docs/api-reference.md#workspace-navigation) | Get workspace structure         | None                                                                                                                         |
-| [create_task](docs/api-reference.md#task-management)                  | Create a task                   | `name`, (`listId`/`listName`)                                                                                          |
-| [create_bulk_tasks](docs/api-reference.md#task-management)            | Create multiple tasks           | `tasks[]`                                                                                                                  |
-| [update_task](docs/api-reference.md#task-management)                  | Modify task                     | `taskId`/`taskName`                                                                                                      |
-| [update_bulk_tasks](docs/api-reference.md#task-management)            | Update multiple tasks           | `tasks[]` with IDs or names                                                                                                |
-| [get_tasks](docs/api-reference.md#task-management)                    | Get tasks from list             | `listId`/`listName`                                                                                                      |
-| [get_task](docs/api-reference.md#task-management)                     | Get single task details         | `taskId`/`taskName` (with smart disambiguation)                                                                          |
-| [get_workspace_tasks](docs/api-reference.md#task-management)          | Get tasks with filtering        | At least one filter (tags, list_ids, space_ids, etc.)                                                                        |
-| [get_task_comments](docs/api-reference.md#task-management)            | Get comments on a task          | `taskId`/`taskName`                                                                                                      |
-| [create_task_comment](docs/api-reference.md#task-management)          | Add a comment to a task         | `commentText`, (`taskId`/(`taskName`+`listName`))                                                                    |
-| [attach_task_file](docs/api-reference.md#task-management)             | Attach file to a task           | `taskId`/`taskName`, (`file_data` or `file_url`)                                                                     |
-| [delete_task](docs/api-reference.md#task-management)                  | Remove task                     | `taskId`/`taskName`                                                                                                      |
-| [delete_bulk_tasks](docs/api-reference.md#task-management)            | Remove multiple tasks           | `tasks[]` with IDs or names                                                                                                |
-| [move_task](docs/api-reference.md#task-management)                    | Move task                       | `taskId`/`taskName`, `listId`/`listName`                                                                             |
-| [move_bulk_tasks](docs/api-reference.md#task-management)              | Move multiple tasks             | `tasks[]` with IDs or names, target list                                                                                   |
-| [duplicate_task](docs/api-reference.md#task-management)               | Copy task                       | `taskId`/`taskName`, `listId`/`listName`                                                                             |
-| [create_list](docs/api-reference.md#list-management)                  | Create list in space            | `name`, `spaceId`/`spaceName`                                                                                          |
-| [create_folder](docs/api-reference.md#folder-management)              | Create folder                   | `name`, `spaceId`/`spaceName`                                                                                          |
-| [create_list_in_folder](docs/api-reference.md#list-management)        | Create list in folder           | `name`, `folderId`/`folderName`                                                                                        |
-| [get_folder](docs/api-reference.md#folder-management)                 | Get folder details              | `folderId`/`folderName`                                                                                                  |
-| [update_folder](docs/api-reference.md#folder-management)              | Update folder properties        | `folderId`/`folderName`                                                                                                  |
-| [delete_folder](docs/api-reference.md#folder-management)              | Delete folder                   | `folderId`/`folderName`                                                                                                  |
-| [get_list](docs/api-reference.md#list-management)                     | Get list details                | `listId`/`listName`                                                                                                      |
-| [update_list](docs/api-reference.md#list-management)                  | Update list properties          | `listId`/`listName`                                                                                                      |
-| [delete_list](docs/api-reference.md#list-management)                  | Delete list                     | `listId`/`listName`                                                                                                      |
-| [get_space_tags](docs/api-reference.md#tag-management)                | Get space tags                  | `spaceId`/`spaceName`                                                                                                    |
-| [create_space_tag](docs/api-reference.md#tag-management)              | Create tag                      | `tagName`, `spaceId`/`spaceName`                                                                                       |
-| [update_space_tag](docs/api-reference.md#tag-management)              | Update tag                      | `tagName`, `spaceId`/`spaceName`                                                                                       |
-| [delete_space_tag](docs/api-reference.md#tag-management)              | Delete tag                      | `tagName`, `spaceId`/`spaceName`                                                                                       |
-| [add_tag_to_task](docs/api-reference.md#tag-management)               | Add tag to task                 | `tagName`, `taskId`/(`taskName`+`listName`)                                                                          |
-| [remove_tag_from_task](docs/api-reference.md#tag-management)          | Remove tag from task            | `tagName`, `taskId`/(`taskName`+`listName`)                                                                          |
-| [get_task_time_entries](docs/api-reference.md#time-tracking)          | Get time entries for a task     | `taskId`/`taskName`                                                                                                      |
-| [start_time_tracking](docs/api-reference.md#time-tracking)            | Start time tracking on a task   | `taskId`/`taskName`                                                                                                      |
-| [stop_time_tracking](docs/api-reference.md#time-tracking)             | Stop current time tracking      | None                                                                                                                         |
-| [add_time_entry](docs/api-reference.md#time-tracking)                 | Add manual time entry to a task | `taskId`/`taskName`, `start`, `duration`                                                                             |
-| [delete_time_entry](docs/api-reference.md#time-tracking)              | Delete a time entry             | `timeEntryId`                                                                                                              |
-| [get_current_time_entry](docs/api-reference.md#time-tracking)         | Get currently running timer     | None                                                                                                                         |
-| [get_workspace_members](docs/api-reference.md#member-management)      | Get all workspace members       | None                                                                                                                         |
-| [find_member_by_name](docs/api-reference.md#member-management)        | Find member by name or email    | `nameOrEmail`                                                                                                               |
-| [resolve_assignees](docs/api-reference.md#member-management)          | Resolve member names to IDs     | `assignees[]`                                                                                                              |
-| [create_document](docs/api-reference.md#document-management)          | Create a document               | `workspaceId`, `name`, `parentId`/`parentType`, `visibility`, `create_pages`                                     |
-| [get_document](docs/api-reference.md#document-management)             | Get a document                  | `workspaceId`/`documentId`                                                                                               |
-| [list_documents](docs/api-reference.md#document-management)           | List documents                  | `workspaceId`, `documentId`/`creator`/`deleted`/`archived`/`parent_id`/`parent_type`/`limit`/`next_cursor` |
-| [list_document_pages](docs/api-reference.md#document-management)      | List document pages             | `documentId`/`documentName`                                                                                              |
-| [get_document_pages](docs/api-reference.md#document-management)       | Get document pages              | `documentId`/`documentName`, `pageIds`                                                                                 |
-| [create_document_pages](docs/api-reference.md#document-management)    | Create a document page          | `workspaceId`/`documentId`, `parent_page_id`/`name`/`sub_title`,`content`/`content_format`                     |
-| [update_document_page](docs/api-reference.md#document-management)     | Update a document page          | `workspaceId`/`documentId`, `name`/`sub_title`,`content`/`content_edit_mode`/`content_format`                  |
+| Tool | Description | Required Parameters |
+| ---- | ----------- | ------------------- |
+| **Project Management** |
+| `create_task` | Create a task in a project | `name`, `board_id`, `creator_username` |
+| `get_tasks` | Get tasks from a board | `board_id` and optional filters |
+| `get_detail_task` | Get detailed information about a task | `id` |
+| `get_projects` | Get all projects and boards | Optional search query `q` |
+| **Workflow Management** |
+| `create_job` | Create a job in a workflow | `name`, `workflow_id`, `creator_username` |
+| `get_jobs` | Get jobs from a workflow | `workflow_id` and optional filters |
+| `get_detail_job` | Get detailed information about a job | `id` |
+| `get_workflows` | Get all available workflows | Optional search query `q` |
+| **User Management** |
+| `find_users` | Find users by name or email | `q` (search query), `properties` |
+| `list_all_users` | Get all workspace members | None |
 
-See [full documentation](docs/api-reference.md) for optional parameters and advanced usage.
+See the project documentation for optional parameters and advanced usage.
 
-## Member Management Tools
+## User Management
 
-When creating tasks, you can now assign users using the `assignees` parameter. The parameter accepts an array of user IDs, emails, or usernames:
+When creating tasks or jobs, you can assign users using the `user_id` parameter. Additionally, you need to specify the `creator_username` to indicate who created the task or job:
 
 ```json
 {
-  "name": "New Task",
-  "description": "This is a new task.",
-  "assignees": ["jdoe@example.com", "Jane Smith"]  // Emails, usernames, or user IDs
+  "name": "🚀 New Feature Implementation",
+  "board_id": "board_123",
+  "content": "Implement the new feature described in the spec",
+  "creator_username": "jane.doe",
+  "user_id": "user_456"
 }
 ```
 
-The member management tools help resolve user references when needed.
-
-## Prompts
-
-Not yet implemented and not supported by all client apps. Request a feature for a Prompt implementation that would be most beneficial for your workflow (without it being too specific). Examples:
-
-| Prompt                                             | Purpose                   | Features                                  |
-| -------------------------------------------------- | ------------------------- | ----------------------------------------- |
-| [summarize_tasks](docs/api-reference.md#prompts)      | Task overview             | Status summary, priorities, relationships |
-| [analyze_priorities](docs/api-reference.md#prompts)   | Priority optimization     | Distribution analysis, sequencing         |
-| [generate_description](docs/api-reference.md#prompts) | Task description creation | Objectives, criteria, dependencies        |
+The user management tools help you find users by name or email and get their IDs for task assignment.
 
 ## Error Handling
 
-The server provides clear error messages for:
+The Rework MCP server provides clear error messages for:
 
 - Missing required parameters
-- Invalid IDs or names
-- Items not found
+- Invalid IDs or references
+- Resources not found
+- Authentication failures
 - Permission issues
 - API errors
 - Rate limiting
 
 The `LOG_LEVEL` environment variable can be specified to control the verbosity of server logs. Valid values are `trace`, `debug`, `info`, `warn`, and `error` (default).
-This can be also be specified on the command line as, e.g. `--env LOG_LEVEL=info`.
+This can also be specified on the command line as: `--env LOG_LEVEL=info`.
 
-## Support the Developer
+## Custom Fields Support
 
-When using this server, you may occasionally see a small sponsor message with a link to this repository included in tool responses. I hope you can support the project!
-If you find this project useful, please consider supporting:
+Both task and job creation support custom fields through the `custom_fields` parameter, which accepts an array of objects with `id` and `value` properties:
 
-[![Sponsor TaazKareem](https://img.shields.io/badge/Sponsor-TaazKareem-orange?logo=github)](https://github.com/sponsors/TaazKareem)
-
-<a href="https://buymeacoffee.com/taazkareem">
-  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" width="200" alt="Buy Me A Coffee">
-</a>
-
-## Acknowledgements
-
-Special thanks to [ClickUp](https://clickup.com) for their excellent API and services that make this integration possible.
+```json
+{
+  "custom_fields": [
+    {
+      "id": "custom_field_123",
+      "value": "High Priority"
+    },
+    {
+      "id": "custom_field_456",
+      "value": true
+    }
+  ]
+}
+```
 
 ## Contributing
 
-Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for details.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
@@ -245,9 +194,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Disclaimer
 
-This software makes use of third-party APIs and may reference trademarks
-or brands owned by third parties. The use of such APIs or references does not imply
-any affiliation with or endorsement by the respective companies. All trademarks and
-brand names are the property of their respective owners. This project is an independent
-work and is not officially associated with or sponsored by any third-party company mentioned.
-# rework-mcp-server
+This software makes use of the Rework API. All trademarks and brand names are the property of their respective owners. This project is not officially associated with or endorsed by Rework.

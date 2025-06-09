@@ -17,8 +17,11 @@ export const createJobSchema = {
     tags: z.array(z.string()).optional().describe("Optional array of tag names to assign to the job. The tags must already exist in the space."),
     custom_fields: z.array(
         z.object({
-            id: z.string().describe("ID of the custom field"),
-            value: z.any().describe("Value for the custom field. Type depends on the field type.")
+            code: z.string().describe("Code of the custom field"),
+            value: z.any().describe(`
+				Value for the custom field. Type depends on the field type.
+				If the type is 'date' or 'datetime' the value should be a Unix timestamp (seconds).
+			`)
         })
     ).optional().describe("Optional array of custom field values to set on the job. Each object must have an 'id' and 'value' property.")
 };
