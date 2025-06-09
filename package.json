@@ -1,7 +1,7 @@
 {
-  "name": "@taazkareem/clickup-mcp-server",
+  "name": "rework-mcp-server",
   "version": "0.7.2",
-  "description": "ClickUp MCP Server - Integrate ClickUp tasks with AI through Model Context Protocol",
+  "description": "Rework MCP Server - Integrate rework tasks with AI through Model Context Protocol",
   "type": "module",
   "main": "build/index.js",
   "bin": "build/index.js",
@@ -19,14 +19,14 @@
     "prepare": "npm run build"
   },
   "keywords": [
-    "clickup",
+    "rework",
     "mcp",
     "ai",
     "tasks",
     "project-management",
     "model-context-protocol",
-    "clickup-server",
-    "clickup-mcp-server",
+    "rework-server",
+    "rework-mcp-server",
     "task-management",
     "productivity",
     "automation",
@@ -36,9 +36,9 @@
     "project-tracking",
     "task-tracking",
     "project-planning",
-    "clickup-integration",
-    "clickup-api",
-    "clickup-automation",
+    "rework-integration",
+    "rework-api",
+    "rework-automation",
     "task-organization",
     "project-organization"
   ],
@@ -46,12 +46,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/taazkareem/clickup-mcp-server.git"
+    "url": "git+https://github.com/rework-com/rework-mcp-server.git"
   },
   "bugs": {
-    "url": "https://github.com/taazkareem/clickup-mcp-server/issues"
+    "url": "https://github.com/rework-com/rework-mcp-server/issues"
   },
-  "homepage": "https://github.com/taazkareem/clickup-mcp-server#readme",
+  "homepage": "https://github.com/rework-com/rework-mcp-server#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.11.3",
     "axios": "^1.6.7",

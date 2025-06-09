@@ -23,13 +23,20 @@ Add this entry to your client's MCP settings JSON file:
 {
   "mcpServers": {
     "Rework": {
-      "command": "node",
+      "command": "npx",
       "args": [
-        "index.js"
+       "-y",
+	   "rework-mcp-server"
       ],
       "env": {
-        "REWORK_API_KEY": "your-api-key",
-        "REWORK_WORKSPACE_ID": "your-workspace-id"
+        "REWORK_PROJECT_ACCESS_TOKEN": "",
+        "REWORK_PROJECT_PASSWORD": "",
+
+		"REWORK_WORKFLOW_ACCESS_TOKEN": "",
+		"REWORK_WORKFLOW_PASSWORD": "",
+
+        "REWORK_ACCOUNT_ACCESS_TOKEN": "",
+        "REWORK_ACCOUNT_PASSWORD": ""
       }
     }
   }
@@ -39,7 +46,7 @@ Add this entry to your client's MCP settings JSON file:
 Alternatively, you can run the server directly using Node:
 
 ```bash
-node index.js --env REWORK_API_KEY=your-api-key --env REWORK_WORKSPACE_ID=your-workspace-id
+node index.js --env REWORK_PROJECT_ACCESS_TOKEN=your-project-access-token --env REWORK_PROJECT_PASSWORD=your-project-password --env REWORK_WORKFLOW_ACCESS_TOKEN=your-workflow-access-token --env REWORK_WORKFLOW_PASSWORD=your-workflow-password --env REWORK_ACCOUNT_ACCESS_TOKEN=your-account-access-token --env REWORK_ACCOUNT_PASSWORD=your-account-password
 ```
 
 You can use the `DISABLED_TOOLS` environment variable to disable specific tools. Provide a comma-separated list of tool names to disable (e.g., `create_task,get_tasks`).
@@ -59,8 +66,12 @@ The server can be run in SSE (Server-Sent Events) mode by setting the following 
         "index.js"
       ],
       "env": {
-        "REWORK_API_KEY": "your-api-key",
-        "REWORK_WORKSPACE_ID": "your-workspace-id",
+        "REWORK_PROJECT_ACCESS_TOKEN": "your-project-access-token",
+        "REWORK_PROJECT_PASSWORD": "your-project-password",
+        "REWORK_WORKFLOW_ACCESS_TOKEN": "your-workflow-access-token",
+        "REWORK_WORKFLOW_PASSWORD": "your-workflow-password",
+        "REWORK_ACCOUNT_ACCESS_TOKEN": "your-account-access-token",
+        "REWORK_ACCOUNT_PASSWORD": "your-account-password",
         "ENABLE_SSE": "true",
         "PORT": "8000"  // Optional, defaults to 3000
       }
@@ -72,7 +83,7 @@ The server can be run in SSE (Server-Sent Events) mode by setting the following 
 Or via command line:
 
 ```bash
-node index.js --env REWORK_API_KEY=your-api-key --env REWORK_WORKSPACE_ID=your-workspace-id --env ENABLE_SSE=true --env PORT=8000
+node index.js --env REWORK_PROJECT_ACCESS_TOKEN=your-project-access-token --env REWORK_PROJECT_PASSWORD=your-project-password --env REWORK_WORKFLOW_ACCESS_TOKEN=your-workflow-access-token --env REWORK_WORKFLOW_PASSWORD=your-workflow-password --env REWORK_ACCOUNT_ACCESS_TOKEN=your-account-access-token --env REWORK_ACCOUNT_PASSWORD=your-account-password --env ENABLE_SSE=true --env PORT=8000
 ```
 
 ## Docker Deployment
@@ -88,8 +99,12 @@ services:
     ports:
       - '3000:8000'
     environment:
-      - REWORK_API_KEY=${REWORK_API_KEY}
-      - REWORK_WORKSPACE_ID=${REWORK_WORKSPACE_ID}
+      - REWORK_PROJECT_ACCESS_TOKEN=${REWORK_PROJECT_ACCESS_TOKEN}
+      - REWORK_PROJECT_PASSWORD=${REWORK_PROJECT_PASSWORD}
+      - REWORK_WORKFLOW_ACCESS_TOKEN=${REWORK_WORKFLOW_ACCESS_TOKEN}
+      - REWORK_WORKFLOW_PASSWORD=${REWORK_WORKFLOW_PASSWORD}
+      - REWORK_ACCOUNT_ACCESS_TOKEN=${REWORK_ACCOUNT_ACCESS_TOKEN}
+      - REWORK_ACCOUNT_PASSWORD=${REWORK_ACCOUNT_PASSWORD}
       - ENABLE_SSE=true
       - LOG_LEVEL=info
     volumes:
