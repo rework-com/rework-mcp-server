@@ -32,8 +32,8 @@ Add this entry to your client's MCP settings JSON file:
         "REWORK_PROJECT_ACCESS_TOKEN": "",
         "REWORK_PROJECT_PASSWORD": "",
 
-		"REWORK_WORKFLOW_ACCESS_TOKEN": "",
-		"REWORK_WORKFLOW_PASSWORD": "",
+        "REWORK_WORKFLOW_ACCESS_TOKEN": "",
+        "REWORK_WORKFLOW_PASSWORD": "",
 
         "REWORK_ACCOUNT_ACCESS_TOKEN": "",
         "REWORK_ACCOUNT_PASSWORD": ""
