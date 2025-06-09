@@ -28,6 +28,7 @@ import { createJobHandler, createJobTool } from "./tools/workflows/job/create_jo
 import { getJobsHandler, getJobsTool } from "./tools/workflows/job/get_jobs.js";
 import { getDetailJobHandler, getDetailJobTool } from "./tools/workflows/job/get_detail_job.js";
 import { getWorkflowsHandler, getWorkflowsTool } from "./tools/workflows/workflow/all.js";
+import { commentJobHandler, commentJobTool } from "./tools/workflows/job/comment_a_job.js";
 
 
 // Create a logger instance for server
@@ -91,41 +92,50 @@ server.tool(
  * @desc Jobs tools
  */
 server.tool(
-	createJobTool.name,
-	createJobTool.description,
-	createJobTool.inputSchema,
+createJobTool.name,
+createJobTool.description,
+createJobTool.inputSchema,
+async (params) => {
+	return (await createJobHandler(params)) as Tool;
+}
+)
+  
+server.tool(
+	getJobsTool.name,
+	getJobsTool.description,
+	getJobsTool.inputSchema,
 	async (params) => {
-	  return (await createJobHandler(params)) as Tool;
+	return (await getJobsHandler(params)) as Tool;
 	}
-  )
-  
-  server.tool(
-	  getJobsTool.name,
-	  getJobsTool.description,
-	  getJobsTool.inputSchema,
-	  async (params) => {
-		return (await getJobsHandler(params)) as Tool;
-	  }
-  )
+)
   
   
-  server.tool(
-	  getDetailJobTool.name,
-	  getDetailJobTool.description,
-	  getDetailJobTool.inputSchema,
-	  async (params) => {
-		return (await getDetailJobHandler(params)) as Tool;
-	  }
-  )
+server.tool(
+	getDetailJobTool.name,
+	getDetailJobTool.description,
+	getDetailJobTool.inputSchema,
+	async (params) => {
+	return (await getDetailJobHandler(params)) as Tool;
+	}
+)
+
+server.tool(
+	commentJobTool.name,
+	commentJobTool.description,
+	commentJobTool.inputSchema,
+	async (params) => {
+	return (await commentJobHandler(params)) as Tool;
+	}
+)
   
-  server.tool(
-	  getWorkflowsTool.name,
-	  getWorkflowsTool.description,
-	  getWorkflowsTool.inputSchema,
-	  async (params) => {
-		return (await getWorkflowsHandler(params)) as Tool;
-	  }
-  )
+server.tool(
+	getWorkflowsTool.name,
+	getWorkflowsTool.description,
+	getWorkflowsTool.inputSchema,
+	async (params) => {
+	return (await getWorkflowsHandler(params)) as Tool;
+	}
+)
 
 /**
  * @desc User tools
