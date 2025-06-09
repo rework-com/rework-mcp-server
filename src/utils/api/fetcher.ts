@@ -171,8 +171,29 @@ export class ReworkAccountFetcher extends ReworkFetcher {
   }
 }
 
+
+/**
+ * ReworkWorkflowFetcher utility
+ * 
+ * Similar to ReworkFetcher but uses account credentials instead of project credentials
+ */
+export class ReworkWorkflowFetcher extends ReworkFetcher {
+	constructor() {
+	  super();
+	  this.accessToken = config.reworkWorkflowAccessToken;
+	  this.password = config.reworkWorkflowPassword;
+	  
+	  if (!this.accessToken || !this.password) {
+		throw new Error('Rework Workflow API credentials not found in configuration');
+	  }
+	}
+  }
+
+
 // Export singleton instances for easy import and use
 export const reworkProjectFetcher = new ReworkFetcher();
+
+export const reworkWorkflowFetcher = new ReworkWorkflowFetcher();
 export const reworkAccountFetcher = new ReworkAccountFetcher();
 
 // Export default for convenience

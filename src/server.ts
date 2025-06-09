@@ -24,6 +24,10 @@ import { listAllUsersHandler, listAllUsersTool } from "./tools/system/user/list_
 import { getProjectsHandler, getProjectsTool } from "./tools/projects/project/all.js";
 import { getDetailTaskHandler, getDetailTaskTool } from "./tools/projects/task/get_detail_task.js";
 import { findUsersHandler, findUsersTool } from "./tools/system/user/find_users.js";
+import { createJobHandler, createJobTool } from "./tools/workflows/job/create_job.js";
+import { getJobsHandler, getJobsTool } from "./tools/workflows/job/get_jobs.js";
+import { getDetailJobHandler, getDetailJobTool } from "./tools/workflows/job/get_detail_job.js";
+import { getWorkflowsHandler, getWorkflowsTool } from "./tools/workflows/workflow/all.js";
 
 
 // Create a logger instance for server
@@ -44,7 +48,7 @@ server.resource('users', 'users', async (params: any) => {
 
 
 /**
- * @desc Task tools
+ * @desc Projects tools
  */
 server.tool(
   createTaskTool.name,
@@ -64,24 +68,13 @@ server.tool(
 	}
 )
 
-// /**
-//  * @desc User tools
-//  */
-// server.tool(
-// 	listAllUsersTool.name,
-// 	listAllUsersTool.description,
-// 	listAllUsersTool.inputSchema,
-// 	async (params) => {
-// 	  return (await listAllUsersHandler(params)) as Tool;
-// 	}
-// )
 
 server.tool(
-	findUsersTool.name,
-	findUsersTool.description,
-	findUsersTool.inputSchema,
+	getDetailTaskTool.name,
+	getDetailTaskTool.description,
+	getDetailTaskTool.inputSchema,
 	async (params) => {
-	  return (await findUsersHandler(params)) as Tool;
+	  return (await getDetailTaskHandler(params)) as Tool;
 	}
 )
 
@@ -94,15 +87,60 @@ server.tool(
 	}
 )
 
-
+/**
+ * @desc Jobs tools
+ */
 server.tool(
-	getDetailTaskTool.name,
-	getDetailTaskTool.description,
-	getDetailTaskTool.inputSchema,
+	createJobTool.name,
+	createJobTool.description,
+	createJobTool.inputSchema,
 	async (params) => {
-	  return (await getDetailTaskHandler(params)) as Tool;
+	  return (await createJobHandler(params)) as Tool;
+	}
+  )
+  
+  server.tool(
+	  getJobsTool.name,
+	  getJobsTool.description,
+	  getJobsTool.inputSchema,
+	  async (params) => {
+		return (await getJobsHandler(params)) as Tool;
+	  }
+  )
+  
+  
+  server.tool(
+	  getDetailJobTool.name,
+	  getDetailJobTool.description,
+	  getDetailJobTool.inputSchema,
+	  async (params) => {
+		return (await getDetailJobHandler(params)) as Tool;
+	  }
+  )
+  
+  server.tool(
+	  getWorkflowsTool.name,
+	  getWorkflowsTool.description,
+	  getWorkflowsTool.inputSchema,
+	  async (params) => {
+		return (await getWorkflowsHandler(params)) as Tool;
+	  }
+  )
+
+/**
+ * @desc User tools
+ */
+server.tool(
+	findUsersTool.name,
+	findUsersTool.description,
+	findUsersTool.inputSchema,
+	async (params) => {
+	  return (await findUsersHandler(params)) as Tool;
 	}
 )
+
+
+
 
 
 async function main() {

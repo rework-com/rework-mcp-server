@@ -23,6 +23,8 @@ for (let i = 0; i < args.length; i++) {
     if (key === 'REWORK_PROJECT_PASSWORD') envArgs.reworkProjectPassword = value;
     if (key === 'REWORK_ACCOUNT_ACCESS_TOKEN') envArgs.reworkAccountAccessToken = value;
     if (key === 'REWORK_ACCOUNT_PASSWORD') envArgs.reworkAccountPassword = value;
+    if (key === 'REWORK_WORKFLOW_ACCESS_TOKEN') envArgs.reworkWorkflowAccessToken = value;
+    if (key === 'REWORK_WORKFLOW_PASSWORD') envArgs.reworkWorkflowPassword = value;
     if (key === 'DOCUMENT_SUPPORT') envArgs.documentSupport = value;
     if (key === 'DOCUMENT_MODEL') envArgs.documentSupport = value; // Backward compatibility
     if (key === 'DOCUMENT_MODULE') envArgs.documentSupport = value; // Backward compatibility
@@ -69,8 +71,13 @@ export const parseLogLevel = (levelStr: string | undefined): LogLevel => {
 interface Config {
   reworkProjectAccessToken: string;
   reworkProjectPassword: string;
+
   reworkAccountAccessToken: string;
   reworkAccountPassword: string;
+
+  reworkWorkflowAccessToken: string;
+  reworkWorkflowPassword: string;
+
   enableSponsorMessage: boolean;
   documentSupport: string;
   logLevel: LogLevel;
@@ -85,8 +92,13 @@ console.log(process.env)
 const configuration: Config = {
   reworkProjectAccessToken: envArgs.reworkProjectAccessToken || process.env.REWORK_PROJECT_ACCESS_TOKEN || '',
   reworkProjectPassword: envArgs.reworkProjectPassword || process.env.REWORK_PROJECT_PASSWORD || '',
+
   reworkAccountAccessToken: envArgs.reworkAccountAccessToken || process.env.REWORK_ACCOUNT_ACCESS_TOKEN || '',
   reworkAccountPassword: envArgs.reworkAccountPassword || process.env.REWORK_ACCOUNT_PASSWORD || '',
+
+  reworkWorkflowAccessToken: envArgs.reworkWorkflowAccessToken || process.env.REWORK_WORKFLOW_ACCESS_TOKEN || '',
+  reworkWorkflowPassword: envArgs.reworkWorkflowPassword || process.env.REWORK_WORKFLOW_PASSWORD || '',
+
   enableSponsorMessage: process.env.ENABLE_SPONSOR_MESSAGE !== 'false',
   documentSupport:
     envArgs.documentSupport ||
@@ -107,7 +119,7 @@ const configuration: Config = {
 // Don't log to console as it interferes with JSON-RPC communication
 
 // Validate only the required variables are present
-const requiredVars = ['reworkProjectAccessToken', 'reworkProjectPassword', 'reworkAccountAccessToken', 'reworkAccountPassword'];
+const requiredVars = ['reworkProjectAccessToken', 'reworkProjectPassword', 'reworkAccountAccessToken', 'reworkAccountPassword', 'reworkWorkflowAccessToken', 'reworkWorkflowPassword'];
 const missingEnvVars = requiredVars
   .filter(key => !configuration[key as keyof Config])
   .map(key => key);
