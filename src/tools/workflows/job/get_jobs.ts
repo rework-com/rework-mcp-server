@@ -24,7 +24,8 @@ export const getJobsSchema = {
     
 	created_from: z.string().optional().describe("Optional created from. Supports Unix timestamps (seconds)"),
 	created_to: z.string().optional().describe("Optional created to. Supports Unix timestamps (seconds)"),
-
+	finish_from: z.string().optional().describe("Optional finish from. Supports Unix timestamps (seconds)"),
+    finish_to: z.string().optional().describe("Optional finish to. Supports Unix timestamps (seconds)"),
     creator_username: z.string().optional().describe("Optional username of the creator. This will be used to indicate the job creator."),
     username: z.string().optional().describe("Optional username of the assignee. This will be used to assign the job to the user."),
 	status: z.enum([JobStatus.ACTIVE, JobStatus.DONE, JobStatus.FAILED, JobStatus.OVERDUE] as const).optional().describe("Optional status of the jobs. Can be one of: 'active' (not done), 'done', 'review' (In review process), 'todo' (not started), 'doing' (started), 'donelate' (completed after deadline), 'overdue' (not done and past deadline), 'notreview' (not in review), 'today' (due today)"),
@@ -37,6 +38,7 @@ export const getJobsTool = {
 		Can filtered by q (query to filter job name), 
 		deadline_from (Unix timestamp in seconds), deadline_to (Unix timestamp in seconds), 
 		created_from (Unix timestamp in seconds), created_to (Unix timestamp in seconds), 
+		finish_from (Unix timestamp in seconds), finish_to (Unix timestamp in seconds), 
 		page (page number), creator_username (username of creator), username (username of assignee), 
 		q (query to filter job name), 
 		workflow_id (ID of the workflow that the jobs belong to), 
@@ -61,6 +63,8 @@ export async function getJobsHandler(params: any) {
         deadline_to,
         created_from,
         created_to,
+        finish_from,
+        finish_to,
         page,
         creator_username,
         username,
@@ -80,6 +84,8 @@ export async function getJobsHandler(params: any) {
     if (deadline_to) jobData.deadline_to = deadline_to;
     if (created_from) jobData.created_from = created_from;
     if (created_to) jobData.created_to = created_to;
+    if (finish_from) jobData.finish_from = finish_from;
+    if (finish_to) jobData.finish_to = finish_to;
     if (page) jobData.page = page;
     if (creator_username) jobData.creator_username = creator_username;
     if (username) jobData.username = username;
@@ -92,27 +98,34 @@ export async function getJobsHandler(params: any) {
 	})
 
 	let jobs = (data?.jobs || []);
-	if (jobs.length > 30) {
-		jobs = jobs.map((e: any) => {
-			return {
-				name: e.name,
-				id: e.id,
-				content: e.content,
-				since: e.since,
-				status: e.status,
-				user_id: e.user_id,
-				creator_id: e.creator_id,
-				stage_export: e.stage_export,
-				custom_fields: (e.form || []).map((f: any) => ({
-					name: f.name,
-					id: f.id,
-					type: f.type,
-					value: f.display
-				})),
-
-			}
-		})
-	}
+	jobs = jobs.map((e: any) => {
+		return {
+			name: e.name,
+			id: e.id,
+			content: e.content,
+			since: e.since,
+			status: e.status,
+			user_id: e.user_id,
+			creator_id: e.creator_id,
+			stage_export: e.stage_export,
+			custom_fields: (e.form || []).map((f: any) => ({
+				name: f.name,
+				id: f.id,
+				type: f.type,
+				value: f.display
+			})),
+			deadline: e.deadline,
+			last_update: e.last_update,
+			finish_at: e.finish_at,
+			moves: (e.moves || []).map((m: any) => ({
+				duration: m.duration,
+				user_id: m.user_id,
+				stage_id: m.stage_id,
+				from_stage_id: m.from_stage_id,
+				stage_start: m.stage_start,
+			}))
+		}
+	})
 		
 
     return Responder.createResponse({

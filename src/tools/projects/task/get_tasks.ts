@@ -97,30 +97,28 @@ export async function getTasksHandler(params: any) {
 	})
 
 	let tasks = (data?.tasks || []);
-	if (tasks.length > 30) {
-		tasks = tasks.map((e: any) => {
-			return {
-				name: e.name,
-				id: e.id,
-				content: e.content,
-				since: e.since,
-				status: e.status,
-				user_id: e.user_id,
-				creator_id: e.creator_id,
-				board_export: e.board_export,
-				project_export: e.project_export,
-				result: e.result,
-				deadline: e.deadline, 
-				last_update: e.last_update,
-				custom_fields: (e.form || []).map((f: any) => ({
-					name: f.name,
-					id: f.id,
-					type: f.type,
-					value: f.display
-				})),
-			}
-		})
-	}
+	tasks = tasks.map((e: any) => {
+		return {
+			name: e.name,
+			id: e.id,
+			content: e.content,
+			since: e.since,
+			status: e.status,
+			user_id: e.user_id,
+			creator_id: e.creator_id,
+			board_export: e.board_export,
+			project_export: e.project_export,
+			result: e.result,
+			deadline: e.deadline, 
+			last_update: e.last_update,
+			custom_fields: (e.form || []).map((f: any) => ({
+				name: f.name,
+				id: f.id,
+				type: f.type,
+				value: f.display
+			})),
+		}
+	})
 		
 
     return Responder.createResponse({
