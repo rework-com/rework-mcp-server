@@ -74,7 +74,7 @@ export async function getTasksHandler(params: any) {
 
     // Prepare task data
     const taskData: Record<string, any> = {
-        
+        limit: 10
     };
 
     // Add optional fields if they exist

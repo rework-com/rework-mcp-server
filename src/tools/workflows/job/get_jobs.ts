@@ -70,7 +70,7 @@ export async function getJobsHandler(params: any) {
 
     // Prepare job data
     const jobData: Record<string, any> = {
-        
+        limit: 10
     };
 
     // Add optional fields if they exist
