@@ -1,14 +1,8 @@
-# v1.1.3 Release Notes (2025-04-25)
+# v1.1.3 Release Notes (2025-06-27)
 
 ## 🛠️ Bug Fixes
 
-- Fixed time estimate support in task updates:
-  - Removed redundant field-specific validation check in task update operations
-  - Simplified validation to check only for the presence of update fields
-  - Fixed "At least one field to update must be provided" error when using time_estimate
-  - Added time string parsing for converting formats like "2h 30m" to minutes
-  - Improved tool description for clear guidance on supported formats
-  - Ensures compatibility with all fields defined in the UpdateTaskData type
+- Improved API response handling for tasks and jobs
 
 ## 📦 Dependencies
 
@@ -18,6 +12,6 @@
 
 Special thanks to our contributors who reported and helped fix this issue:
 
-- [@m-roberts](https://github.com/m-roberts) - Reporting and suggesting fix for the time estimate update issue
+- [@rework-com](https://github.com/rework-com) - Reporting and suggesting fix for the time estimate update issue
 
-Your feedback helps make ClickUp MCP Server better for everyone!
+Your feedback helps make Rework MCP Server better for everyone!
