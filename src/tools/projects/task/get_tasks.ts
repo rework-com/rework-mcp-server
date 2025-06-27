@@ -96,9 +96,9 @@ export async function getTasksHandler(params: any) {
 		data: taskData
 	})
 
-	const tasks = (data?.tasks || []);
+	let tasks = (data?.tasks || []);
 	if (tasks.length > 30) {
-		tasks.map(e => {
+		tasks = tasks.map((e: any) => {
 			return {
 				name: e.name,
 				id: e.id

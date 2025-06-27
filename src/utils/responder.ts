@@ -30,6 +30,16 @@ class Responder {
 
         return { content };
     }
+
+
+	public static clearUnusedFields(data){
+
+		delete data.hid;
+		delete data.collector;
+		delete data.type;
+		delete data.token;
+		
+	}
 }
 
 export default Responder;

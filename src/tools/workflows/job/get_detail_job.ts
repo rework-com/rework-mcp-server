@@ -38,11 +38,15 @@ export async function getDetailJobHandler(params: any) {
         id
     };
 
+	
+
     // Use the fetcher to create the job
-    const data = await reworkWorkflowFetcher.request({
+    let data = await reworkWorkflowFetcher.request({
 		endpoint: '/workflows/v1/job/get',
 		data: jobData
 	})
+
+	
 		
     return Responder.createResponse(data);
 }

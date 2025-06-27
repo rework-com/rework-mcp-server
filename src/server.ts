@@ -92,12 +92,12 @@ server.tool(
  * @desc Jobs tools
  */
 server.tool(
-createJobTool.name,
-createJobTool.description,
-createJobTool.inputSchema,
-async (params) => {
-	return (await createJobHandler(params)) as Tool;
-}
+	createJobTool.name,
+	createJobTool.description,
+	createJobTool.inputSchema,
+	async (params) => {
+		return (await createJobHandler(params)) as Tool;
+	}
 )
   
 server.tool(
