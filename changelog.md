@@ -6,7 +6,7 @@
 - Improved error handling and response formatting for member and task handlers.
 - Refactored imports and code organization for maintainability.
 
-## v1.1.0 (2025-04-25)
+## v1.1.3 (2025-04-25)
 
 ### 🛠️ Bug Fixes
 

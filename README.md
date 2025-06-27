@@ -1,11 +1,11 @@
 # Rework MCP Server
 
 ![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-brightgreen.svg)
-![Version](https://img.shields.io/badge/Version-1.1.0-blue)
+![Version](https://img.shields.io/badge/Version-1.1.3-blue)
 
 A Model Context Protocol (MCP) server for integrating Rework platform with AI applications. This server allows AI agents to interact with Rework projects, tasks, workflows, and jobs through a standardized protocol.
 
-> 🚀 **Status Update:** v1.1.0 now available with complete project management and workflow support.
+> 🚀 **Status Update:** v1.1.3 now available with complete project management and workflow support.
 
 ## Setup
 

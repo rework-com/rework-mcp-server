@@ -6,7 +6,7 @@ import configuration from './config.js';
 
 const server = new McpServer({
   name: 'rework-mcp-server',
-  version: '1.1.0',
+  version: '1.1.3',
 });
 
 const app = express();
