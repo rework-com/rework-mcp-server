@@ -91,12 +91,25 @@ export async function getJobsHandler(params: any) {
 		data: jobData
 	})
 
-	const jobs = (data?.jobs || []);
+	let jobs = (data?.jobs || []);
 	if (jobs.length > 30) {
-		jobs.map(e => {
+		jobs = jobs.map((e: any) => {
 			return {
 				name: e.name,
-				id: e.id
+				id: e.id,
+				content: e.content,
+				since: e.since,
+				status: e.status,
+				user_id: e.user_id,
+				creator_id: e.creator_id,
+				stage_export: e.stage_export,
+				custom_fields: (e.form || []).map((f: any) => ({
+					name: f.name,
+					id: f.id,
+					type: f.type,
+					value: f.display
+				})),
+
 			}
 		})
 	}
