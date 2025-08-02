@@ -4,7 +4,7 @@
  *
  * Configuration handling for ClickUp API credentials and application settings
  *
- * The required environment variables (CLICKUP_API_KEY and CLICKUP_TEAM_ID) are passed
+ * The required environment variables (REWORK_API_KEY and REWORK_TEAM_ID) are passed
  * securely to this file when running the hosted server at smithery.ai. Optionally,
  * they can be parsed via command line arguments when running the server locally.
  *

@@ -217,7 +217,7 @@
 
 ### 🚀 Initial Release
 
-- First public version of ClickUp MCP Server
+- First public version of Rework MCP Server
 - Core functionality for task, list, and folder management
 - Basic workspace hierarchy navigation
 - NPM and Smithery deployment options

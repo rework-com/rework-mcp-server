@@ -14,7 +14,7 @@ We currently provide security updates for the following versions of ClickUp MCP 
 We take the security of the ClickUp MCP Server seriously, especially since it handles API keys and sensitive task data. If you discover a security vulnerability, please follow these steps:
 
 1. **Do NOT disclose the vulnerability publicly** until it has been addressed by the maintainers.
-2. Send details of the vulnerability to the project maintainer directly at [create a private security report](https://github.com/TaazKareem/clickup-mcp-server/security/advisories/new).
+2. Send details of the vulnerability to the project maintainer directly at [create a private security report](https://github.com/TaazKareem/rework-mcp-server/security/advisories/new).
 3. Include as much information as possible, such as:
    - A clear description of the vulnerability
    - Steps to reproduce the issue

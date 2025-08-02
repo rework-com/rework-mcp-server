@@ -9,13 +9,13 @@ services:
     environment:
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
       - GENERIC_TIMEZONE=Asia/Ho_Chi_Minh
-      - N8N_MCP_SERVERS={"ClickUp":{"host":"clickup-mcp-server","port":8000}}
+      - N8N_MCP_SERVERS={"ClickUp":{"host":"rework-mcp-server","port":8000}}
     restart: always
     networks:
       - app-network
 
-  clickup-mcp-server:
-    image: panhpc/mcp-clickup:latest  
+  rework-mcp-server:
+    image: panhpc/mcp-rework:latest  
     # or use build from local Dockerfile
     # build:
     #   context: ../../
@@ -23,8 +23,8 @@ services:
     ports:
       - '3231:8000'
     environment:
-      - CLICKUP_API_KEY=${CLICKUP_API_KEY}
-      - CLICKUP_TEAM_ID=${CLICKUP_TEAM_ID}
+      - REWORK_API_KEY=${REWORK_API_KEY}
+      - REWORK_TEAM_ID=${REWORK_TEAM_ID}
       - ENABLE_SSE=true
       - DOCUMENT_SUPPORT=true
     volumes:

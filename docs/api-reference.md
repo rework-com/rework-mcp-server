@@ -429,7 +429,7 @@ Example using summary format:
         "name": "Project Alpha"
       },
       "due_date": "2024-03-20T10:00:00Z",
-      "url": "https://app.clickup.com/t/123abc",
+      "url": "https://app.rework.com/t/123abc",
       "priority": 1,
       "tags": [
         {
@@ -1061,7 +1061,7 @@ Get details for the document with id 8cdu22c-13153
   "creator": 55154194,
   "public": false,
   "type": 1,
-  "url": "https://app.clickup.com/..."
+  "url": "https://app.rework.com/..."
 }
 ```
 
@@ -1078,7 +1078,7 @@ Show me all documents in the workspace
     {
       "id": "8cdu22c-10153",
       "name": "First Doc name",''
-      "url": "https://app.clickup.com/...",
+      "url": "https://app.rework.com/...",
       "parent": {
         "id": "90131843402",
         "type": 5
