@@ -50,7 +50,7 @@ export async function getWorkflowsHandler(params: any) {
 
     // Add optional fields if they exist
     if (q) workflowData.q = q;
-    if (page) workflowData.page = page;
+    if (page) workflowData.page_id = page;
 
     // Use the fetcher to get the projects
     const data = await reworkWorkflowFetcher.request({
